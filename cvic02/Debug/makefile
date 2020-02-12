@@ -23,24 +23,24 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-cvic01.elf \
+cvic02.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-cvic01.list \
+cvic02.list \
 
 OBJCOPY_BIN += \
-cvic01.bin \
+cvic02.bin \
 
 
 # All Target
-all: cvic01.elf secondary-outputs
+all: cvic02.elf secondary-outputs
 
 # Tool invocations
-cvic01.elf: $(OBJS) $(USER_OBJS) D:\Documents\MMIA\cvic01\STM32F030R8TX_FLASH.ld
-	arm-none-eabi-gcc -o "cvic01.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"D:\Documents\MMIA\cvic01\STM32F030R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="cvic01.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+cvic02.elf: $(OBJS) $(USER_OBJS) D:\Documents\MMIA\cvic02\STM32F030R8TX_FLASH.ld
+	arm-none-eabi-gcc -o "cvic02.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"D:\Documents\MMIA\cvic02\STM32F030R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="cvic02.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -49,13 +49,13 @@ default.size.stdout: $(EXECUTABLES)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-cvic01.list: $(EXECUTABLES)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "cvic01.list"
+cvic02.list: $(EXECUTABLES)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "cvic02.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-cvic01.bin: $(EXECUTABLES)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "cvic01.bin"
+cvic02.bin: $(EXECUTABLES)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "cvic02.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 
