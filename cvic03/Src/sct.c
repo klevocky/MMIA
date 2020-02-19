@@ -5,6 +5,8 @@
  *      Author: student
  */
 #include <stm32f0xx.h>
+#include "sct.h"
+
 #define sct_nla(x) do { if (x) GPIOB->BSRR = (1 << 5); else GPIOB->BRR = (1 << 5); } while (0)
 #define sct_sdi(x) do { if (x) GPIOB->BSRR = (1 << 4); else GPIOB->BRR = (1 << 4); } while (0)
 #define sct_clk(x) do { if (x) GPIOB->BSRR = (1 << 3); else GPIOB->BRR = (1 << 3); } while (0)
@@ -12,7 +14,7 @@
 
 void sct_init(void)
 {
-	SysTick_Config(8000); // 1ms
+	//SysTick_Config(8000); // 1ms
 	RCC->AHBENR |=  RCC_AHBENR_GPIOBEN ;
 	GPIOB->MODER |= GPIO_MODER_MODER4_0 | GPIO_MODER_MODER3_0 | GPIO_MODER_MODER5_0 | GPIO_MODER_MODER10_0 ;
 	sct_led(0);
@@ -86,6 +88,8 @@ void sct_value(uint16_t value)
 {
 	uint32_t reg = 0;
 	reg |= reg_values[0][value / 100 % 10];
-	reg |= reg_values[0][value / 10 % 10];
-	reg |= reg_values[0][value % 10];
+	reg |= reg_values[1][value / 10 % 10];
+	reg |= reg_values[2][value % 10];
+
+	sct_led(reg);
 }

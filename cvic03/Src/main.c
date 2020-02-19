@@ -19,13 +19,15 @@ int main(void)
 {
 	sct_init();
 //	sct_led(0x7A5C36DE);
-	for (volatile uint32_t i = 0; i < 300000; i++) {}
+//	for (volatile uint32_t i = 0; i < 300000; i++) {}
 
 	for(;;)
 	{
-		for (volatile uint32_t i = 0; i < 999; i+111)
+		for (uint32_t i = 0; i < 1000; i=i+111)
 		{
 			sct_value(i);
+			for (uint32_t j = 0; j < 300000; j++) {
+			}
 		}
 	}
 }
