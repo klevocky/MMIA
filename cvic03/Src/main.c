@@ -18,10 +18,15 @@
 int main(void)
 {
 	sct_init();
-	sct_led(0x7A5C36DE);
+//	sct_led(0x7A5C36DE);
 	for (volatile uint32_t i = 0; i < 300000; i++) {}
 
-	for(;;){
+	for(;;)
+	{
+		for (volatile uint32_t i = 0; i < 999; i+111)
+		{
+			sct_value(i);
+		}
 	}
 }
 
