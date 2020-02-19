@@ -12,10 +12,17 @@
 #endif
 
 #include <stm32f0xx.h>
+#include "sct.h"
 
 
 int main(void)
 {
+	sct_init();
+	sct_led(0x7A5C36DE);
+	for (volatile uint32_t i = 0; i < 300000; i++) {}
+
+	for(;;){
+	}
 }
 
 

@@ -1,4 +1,5 @@
 "Src/main.o"
+"Src/sct.o"
 "Src/syscalls.o"
 "Src/sysmem.o"
 "Src/system_stm32f0xx.o"

@@ -1,0 +1,4 @@
+core_cm0.h:611:22:NVIC_SetPriority	24	static
+core_cm0.h:685:26:SysTick_Config	16	static
+sct.c:13:6:sct_init	8	static
+sct.c:22:6:sct_led	24	static
