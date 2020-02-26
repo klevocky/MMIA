@@ -36,7 +36,7 @@ void sct_led(uint32_t value)
 	HAL_GPIO_WritePin(SCT_NLA_GPIO_Port, SCT_NLA_Pin, 0);
 }
 
-static const uint32_t reg_values[3][10] = {
+static const uint32_t reg_values[4][10] = {
 		{
 				//PCDE--------GFAB @ DIS1
 				0b0111000000000111 << 16,
@@ -76,14 +76,29 @@ static const uint32_t reg_values[3][10] = {
 				0b0111000000001111 << 0,
 				0b0110000000001111 << 0,
 		},
+		{
+				//PCDE--------GFAB @ LED
+				0b0000000000000000 << 0,
+				0b0000001000000000 << 0,
+				0b0000011000000000 << 0,
+				0b0000111000000000 << 0,
+				0b0000111100000000 << 0,
+				0b0000111110000000 << 0,
+				0b0000111111000000 << 0,
+				0b0000111111100000 << 0,
+				0b0000111111110000 << 0,
+				0b0000000000000000 << 0,
+				},
 };
 
 void sct_value(uint16_t value)
 {
 	uint32_t reg = 0;
+	uint32_t led = 0;
 	reg |= reg_values[0][value / 100 % 10];
 	reg |= reg_values[1][value / 10 % 10];
 	reg |= reg_values[2][value % 10];
+	reg |= reg_values[3][led];
 
 	sct_led(reg);
 }
