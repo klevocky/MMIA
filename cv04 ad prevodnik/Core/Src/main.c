@@ -64,6 +64,13 @@ static volatile uint32_t raw_pot;
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
  raw_pot = HAL_ADC_GetValue(hadc);
+
+ static uint32_t avg_pot;
+ static uint32_t ADC_Q;
+ raw_pot = avg_pot >> ADC_Q;
+ avg_pot -= raw_pot;
+ avg_pot += HAL_ADC_GetValue(hadc);
+
 }
 
 /* USER CODE END 0 */
@@ -114,7 +121,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  sct_value((raw_pot*500)/4096);
+  sct_value((raw_pot*500)/4096,(raw_pot*9)/4096);
   HAL_Delay(50);
     }
   /* USER CODE END 3 */
