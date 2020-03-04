@@ -20,7 +20,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stdio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -78,16 +77,57 @@ static void uart_byte_available(uint8_t c)
 {
  static uint16_t cnt;
  static char data[CMD_BUFFER_LEN];
+
+ if ((c >= 32)&&(c <= 126))
  if (cnt < CMD_BUFFER_LEN) data[cnt++] = c;
  if (c == '\n' || c == '\r') {
- data[cnt - 1] = '\0';
+ data[cnt] = '\0';
  uart_process_command(data);
  cnt = 0;
  }
 }
-static void uart_process_command(char *data)
+static void uart_process_command(char *cmd)
 {
-	printf("prijato: '%s'\n", data);
+	char *token;
+	token = strtok(cmd, " ");
+	if (strcasecmp(token, "HELLO") == 0) {
+	 printf("Komunikace OK\n");
+	}
+	else if (strcasecmp(token,'LED1 ON') == 0)
+	{
+		printf("Komunikace OK\n");
+	}
+	else if (strcasecmp(token,'LED1 OFF') == 0)
+	{
+		printf("Komunikace OK\n");
+	}
+	else if (strcasecmp(token,'LED2 ON') == 0)
+	{
+		printf("Komunikace OK\n");
+	}
+	else if (strcasecmp(token,'LED2 OFF') == 0)
+	{
+		printf("Komunikace OK\n");
+	}
+	else if (strcasecmp(token,'STATUS') == 0)
+	{
+		printf("Komunikace OK\n");
+	}
+	else if (strcasecmp(token,'READ adresa') == 0)
+	{
+		printf("Komunikace OK\n");
+	}
+	else if (strcasecmp(token,'WRITE adresa hodnota') == 0)
+	{
+		printf("Komunikace OK\n");
+	}
+	else if (strcasecmp(token,'DUMP') == 0)
+	{
+		printf("Komunikace OK\n");
+	}
+
+
+//	printf("prijato: '%s'\n", data);
 }
 
 /* USER CODE END 0 */
@@ -249,9 +289,13 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4|LD2_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -259,12 +303,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : LD2_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin;
+  /*Configure GPIO pins : PA4 LD2_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|LD2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB0 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
